@@ -1,0 +1,576 @@
+{
+	"info": {
+		"_postman_id": "780b5540-2cce-4a48-bfd2-77671d8bfacf",
+		"name": "tb-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25135804"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Admin Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Extract and set token\", function () {\r",
+									"    // Parse the response JSON\r",
+									"    var responseJson = pm.response.json();\r",
+									"\r",
+									"    // Extract the token from the response\r",
+									"    var authAdminToken = responseJson.token;\r",
+									"\r",
+									"    // Set the token in the \"local\" environment\r",
+									"    pm.environment.set(\"adminToken\", authAdminToken);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/admin/login?email=admin@example.com&password=admin",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "admin@example.com"
+								},
+								{
+									"key": "password",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agencies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8000/api/v1/admin/agency",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"agency"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agency Store",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Generate a timestamp\r",
+									"var timestamp = new Date().toISOString().replace(/[-T:\\.Z]/g, '');\r",
+									"\r",
+									"// Generate a random email\r",
+									"var email = \"agency\"+timestamp+Math.floor(Math.random() * 1000);\r",
+									"\r",
+									"// Generate a random name\r",
+									"var name = \"Agency \" + timestamp ;\r",
+									"\r",
+									"// Set the generated values to environment variables\r",
+									"pm.environment.set(\"randomEmail\", email);\r",
+									"pm.environment.set(\"randomName\", name);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{{randomName}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{randomEmail}}@farshadbadri.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "agency",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/api/v1/admin/agency",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"agency"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Properties",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8000/api/v1/admin/property",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"property"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Property Store",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Generate a random email\r",
+									"var star = Math.floor(Math.random() * 6); \r",
+									"\r",
+									"// Generate a random name\r",
+									"var property = \"Property \" + Math.floor(Math.random() * 10000000) ;\r",
+									"\r",
+									"// Set the generated values to environment variables\r",
+									"pm.environment.set(\"randomProperty\", property);\r",
+									"pm.environment.set(\"randomStar\", star);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "provider_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "{{randomProperty}}",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "test details",
+									"type": "text"
+								},
+								{
+									"key": "description_license",
+									"value": "test details licence",
+									"type": "text"
+								},
+								{
+									"key": "rating",
+									"value": "{{randomStar}}",
+									"type": "text"
+								},
+								{
+									"key": "facilities",
+									"value": "[\"Spa\",\"Restaurant\",\"Free Wi-Fi\"]",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "test adress",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/api/v1/admin/property",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"property"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Agency",
+			"item": [
+				{
+					"name": "Agency Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Extract and set token\", function () {\r",
+									"    // Parse the response JSON\r",
+									"    var responseJson = pm.response.json();\r",
+									"\r",
+									"    // Extract the token from the response\r",
+									"    var authAgencyToken = responseJson.token;\r",
+									"\r",
+									"    // Set the token in the \"local\" environment\r",
+									"    pm.environment.set(\"agencyToken\", authAgencyToken);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/agency/login?email=Horizon@example.com&password=agency",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"agency",
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "Horizon@example.com"
+								},
+								{
+									"key": "password",
+									"value": "agency"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hotels",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{agencyToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8000/api/v1/agency/hotel",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"agency",
+								"hotel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hotel Store",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{agencyToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "property_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "description_license",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "rating",
+									"value": "{{randomStar}}",
+									"type": "text"
+								},
+								{
+									"key": "facilities",
+									"value": "[\"Spa\",\"Restaurant\",\"Free Wi-Fi\"]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8000/api/v1/agency/hotel",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"agency",
+								"hotel"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Hotel Availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8000/api/v1/hotels/availability",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"hotels",
+								"availability"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Extract and set token\", function () {\r",
+									"    // Parse the response JSON\r",
+									"    var responseJson = pm.response.json();\r",
+									"\r",
+									"    // Extract the token from the response\r",
+									"    var authToken = responseJson.token;\r",
+									"\r",
+									"    // Set the token in the \"local\" environment\r",
+									"    pm.environment.set(\"token\", authToken);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/login?email=john.due1@example.com&password=user",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "john.due1@example.com"
+								},
+								{
+									"key": "password",
+									"value": "user"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
